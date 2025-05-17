@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="css/admin.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Login Container -->
+    <div id="login-container" class="login-container">
+        <div class="login-box">
+            <h2>Admin Login</h2>
+            <form id="admin-login-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-success w-100">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard Container -->
+    <div id="dashboard-container" style="display: none;">
+        <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">Admin Panel</div>
+            <nav>
+                <ul>
+                    <li><a href="#dashboard" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+                    <li><a href="#products"><i class="fas fa-box"></i> Products</a></li>
+                    <li><a href="#orders"><i class="fas fa-shopping-cart"></i> Orders</a></li>
+                    <li><a href="#users"><i class="fas fa-users"></i> Users</a></li>
+                    <li><a href="#wallets"><i class="fas fa-wallet"></i> Wallet Management</a></li>
+                    <li><a href="#wallet-requests"><i class="fas fa-money-check-alt"></i> Wallet Requests</a></li>
+                    <li><a href="#user-rewards"><i class="fas fa-gift"></i> User Rewards</a></li>
+                    <li><a href="#reward-requests"><i class="fas fa-clipboard-check"></i> Reward Requests</a></li>
+                    <li><a href="#user-notifications"><i class="fas fa-bell"></i> User Notifications</a></li>
+                    <li><a href="../index.html"><i class="fas fa-sign-out-alt"></i> Back to Store</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section active">
+                <h2>Dashboard</h2>
+                <div class="metrics-container">
+                    <!-- First row of metrics -->
+                    <div class="metrics-row">
+                        <div class="metric-card">
+                            <i class="fas fa-box"></i>
+                            <h3>Total Products</h3>
+                            <p id="total-products">0</p>
+                        </div>
+                        <div class="metric-card">
+                            <i class="fas fa-shopping-cart"></i>
+                            <h3>Active Orders</h3>
+                            <p id="active-orders">0</p>
+                        </div>
+                        <div class="metric-card">
+                            <i class="fas fa-users"></i>
+                            <h3>Registered Users</h3>
+                            <p id="registered-users">0</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Product Statistics Section -->
+                    <h3 class="metrics-subtitle">Product Statistics</h3>
+                    <div class="metrics-row">
+                        <div class="metric-card product-categories-card">
+                            <i class="fas fa-tags"></i>
+                            <h3>Product Categories</h3>
+                            <p id="product-categories">0</p>
+                        </div>
+                        <div class="metric-card product-value-card">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <h3>Total Inventory Value</h3>
+                            <p id="inventory-value">PKR 0</p>
+                        </div>
+                        <div class="metric-card avg-price-card">
+                            <i class="fas fa-tag"></i>
+                            <h3>Average Product Price</h3>
+                            <p id="avg-product-price">PKR 0</p>
+                        </div>
+                    </div>
+                    
+                    <!-- User Statistics Section -->
+                    <h3 class="metrics-subtitle">User Statistics</h3>
+                    <div class="metrics-row">
+                        <div class="metric-card new-users-card">
+                            <i class="fas fa-user-plus"></i>
+                            <h3>New Users (30 days)</h3>
+                            <p id="new-users">0</p>
+                        </div>
+                        <div class="metric-card active-users-card">
+                            <i class="fas fa-user-check"></i>
+                            <h3>Active Users</h3>
+                            <p id="active-users">0</p>
+                        </div>
+                        <div class="metric-card user-orders-card">
+                            <i class="fas fa-shopping-basket"></i>
+                            <h3>Avg. Orders Per User</h3>
+                            <p id="avg-orders-per-user">0</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Order metrics - First row -->
+                    <h3 class="metrics-subtitle">Order Statistics</h3>
+                    <div class="metrics-row">
+                        <div class="metric-card total-orders-card">
+                            <i class="fas fa-shopping-bag"></i>
+                            <h3>Total Orders</h3>
+                            <p id="total-orders">0</p>
+                        </div>
+                        <div class="metric-card delivered-card">
+                            <i class="fas fa-check-circle"></i>
+                            <h3>Delivered Orders</h3>
+                            <p id="delivered-orders">0</p>
+                        </div>
+                        <div class="metric-card processing-card">
+                            <i class="fas fa-cog"></i>
+                            <h3>Processing Orders</h3>
+                            <p id="processing-orders">0</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Order metrics - Second row -->
+                    <div class="metrics-row">
+                        <div class="metric-card pending-card">
+                            <i class="fas fa-clock"></i>
+                            <h3>Pending Orders</h3>
+                            <p id="pending-orders">0</p>
+                        </div>
+                        <div class="metric-card shipped-card">
+                            <i class="fas fa-shipping-fast"></i>
+                            <h3>Shipped Orders</h3>
+                            <p id="shipped-orders">0</p>
+                        </div>
+                        <div class="metric-card cancelled-card">
+                            <i class="fas fa-times-circle"></i>
+                            <h3>Cancelled Orders</h3>
+                            <p id="cancelled-orders">0</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Wallet Statistics Section -->
+                    <h3 class="metrics-subtitle">Wallet Statistics</h3>
+                    <div class="metrics-row">
+                        <div class="metric-card wallet-balance-card">
+                            <i class="fas fa-wallet"></i>
+                            <h3>Total Wallet Balance</h3>
+                            <p id="total-wallet-balance">PKR 0</p>
+                        </div>
+                        <div class="metric-card deposit-requests-card">
+                            <i class="fas fa-arrow-down"></i>
+                            <h3>Pending Deposits</h3>
+                            <p id="pending-deposits">0</p>
+                        </div>
+                        <div class="metric-card withdrawal-requests-card">
+                            <i class="fas fa-arrow-up"></i>
+                            <h3>Pending Withdrawals</h3>
+                            <p id="pending-withdrawals">0</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Transaction Statistics -->
+                    <div class="metrics-row">
+                        <div class="metric-card wallet-transactions-card">
+                            <i class="fas fa-exchange-alt"></i>
+                            <h3>Total Transactions</h3>
+                            <p id="total-transactions">0</p>
+                        </div>
+                        <div class="metric-card wallet-users-card">
+                            <i class="fas fa-user-wallet"></i>
+                            <h3>Users With Wallets</h3>
+                            <p id="users-with-wallets">0</p>
+                        </div>
+                        <div class="metric-card wallet-avg-card">
+                            <i class="fas fa-chart-line"></i>
+                            <h3>Avg. Wallet Balance</h3>
+                            <p id="avg-wallet-balance">PKR 0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="notifications">
+                    <h3>Recent Notifications</h3>
+                    <div id="notifications-list"></div>
+                </div>
+            </section>
+
+            <!-- Products Section -->
+            <section id="products" class="section">
+                <h2>Product Management</h2>
+                <div class="products-list" id="products-container"></div>
+            </section>
+
+            <!-- Orders Section -->
+            <section id="orders" class="section">
+                <h2>Order Management</h2>
+                <div class="orders-list" id="orders-container"></div>
+            </section>
+
+            <!-- Users Section -->
+            <section id="users" class="section">
+                <h2>User Management</h2>
+                <div class="users-list" id="users-container"></div>
+            </section>
+            
+            <!-- Wallet Management Section -->
+            <section id="wallets" class="section">
+                <h2>Wallet Management</h2>
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <button class="btn btn-success" onclick="refreshWalletList()">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+                    <div class="d-flex">
+                        <input type="text" id="wallet-search" class="form-control me-2" placeholder="Search by name or email...">
+                        <button class="btn btn-outline-primary" onclick="searchWallets()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">User Wallet Balances</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="wallet-list" id="wallet-container">
+                            <div class="text-center p-5">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <p class="mt-2">Loading wallet data...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Wallet Requests Section -->
+            <section id="wallet-requests" class="section">
+                <h2>Wallet Requests</h2>
+                <div class="row mb-4">
+                    <div class="col-md-12 d-flex justify-content-between align-items-center">
+                        <div>
+                            <button id="deposit-requests-tab" class="btn btn-outline-primary me-2 active">Deposit Requests</button>
+                            <button id="withdrawal-requests-tab" class="btn btn-outline-primary">Withdrawal Requests</button>
+                        </div>
+                        <div>
+                            <input type="text" id="request-search" class="form-control" placeholder="Search requests...">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Deposit Requests Table -->
+                <div id="deposit-requests-container" class="mb-4">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Request ID</th>
+                                    <th>User</th>
+                                    <th>Amount</th>
+                                    <th>Method</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="deposit-requests-list">
+                                <!-- Deposit requests will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <!-- Withdrawal Requests Table -->
+                <div id="withdrawal-requests-container" class="mb-4" style="display: none;">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Request ID</th>
+                                    <th>User</th>
+                                    <th>Amount</th>
+                                    <th>Method</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="withdrawal-requests-list">
+                                <!-- Withdrawal requests will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- User Notifications Section -->
+            <!-- User Rewards Section -->    
+            <section id="user-rewards" class="section">
+                <h2>User Rewards Management</h2>
+                
+                <!-- Bulk Rewards Tab Navigation -->
+                <ul class="nav nav-tabs mb-4" id="rewardsTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="single-rewards-tab" data-bs-toggle="tab" data-bs-target="#single-rewards" type="button" role="tab">
+                            <i class="fas fa-user me-1"></i> Individual Reward
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="bulk-rewards-tab" data-bs-toggle="tab" data-bs-target="#bulk-rewards" type="button" role="tab">
+                            <i class="fas fa-users me-1"></i> Bulk Rewards
+                        </button>
+                    </li>
+                </ul>
+                
+                <!-- Tab Content -->
+                <div class="tab-content" id="rewardsTabContent">
+                    <!-- Individual Reward Tab -->
+                    <div class="tab-pane fade show active" id="single-rewards" role="tabpanel">
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0">Add User Reward</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <form id="add-reward-form">
+                                            <div class="mb-3">
+                                                <label for="reward-user" class="form-label">Select User</label>
+                                                <select id="reward-user" class="form-select" required>
+                                                    <option value="">Select a user</option>
+                                                    <!-- Users will be populated dynamically -->
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="reward-title" class="form-label">Reward Title</label>
+                                                <input type="text" id="reward-title" class="form-control" required placeholder="e.g., Loyalty Bonus, Referral Reward">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="reward-amount" class="form-label">Reward Amount (PKR)</label>
+                                                <input type="number" id="reward-amount" class="form-control" required min="1" step="1" placeholder="Enter amount in PKR">
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="reward-description" class="form-label">Description</label>
+                                                <textarea id="reward-description" class="form-control" rows="3" placeholder="Enter details about this reward"></textarea>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="reward-expiry" class="form-label">Expiry Date (Optional)</label>
+                                                <input type="date" id="reward-expiry" class="form-control">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary w-100">Add Reward</button>
+                                        </form>
+                                    </div>
+                                </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Users List</h5>
+                                <div>
+                                    <input type="text" id="user-search" class="form-control form-control-sm d-inline-block w-auto" placeholder="Search users...">
+                                    <button id="refresh-users-btn" class="btn btn-sm btn-light ms-1" onclick="refreshUsersList()">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <div>
+                                        <button type="button" class="btn btn-sm btn-outline-primary me-1" onclick="selectAllUsersFromList()">Select All</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary me-1" onclick="deselectAllUsersFromList()">Deselect All</button>
+                                    </div>
+                                    <div>
+                                        <span id="quick-selected-count" class="badge bg-primary">0</span> selected
+                                    </div>
+                                </div>
+                                <div id="users-list" class="users-list-container" style="max-height: 300px; overflow-y: auto;">
+                                    <div class="text-center py-4">
+                                        <div class="spinner-border text-primary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                        <p class="mt-2">Loading users...</p>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <button type="button" id="send-to-selected-btn" class="btn btn-primary w-100" onclick="sendRewardToSelectedUsers()" disabled>
+                                        <i class="fas fa-paper-plane me-1"></i> Send Reward to Selected Users
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Bulk Rewards Tab -->
+                <div class="tab-pane fade" id="bulk-rewards" role="tabpanel">
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header bg-primary text-white">
+                                    <h5 class="mb-0">Send Bulk Rewards</h5>
+                                </div>
+                                <div class="card-body">
+                                    <form id="bulk-reward-form">
+                                        <div class="mb-3">
+                                            <label class="form-label">Select Users</label>
+                                            <div class="d-flex mb-2">
+                                                <button type="button" class="btn btn-sm btn-outline-primary me-1" onclick="selectAllUsers('bulk-reward')">Select All</button>
+                                                <button type="button" class="btn btn-sm btn-outline-secondary me-1" onclick="deselectAllUsers('bulk-reward')">Deselect All</button>
+                                                <div class="ms-auto">
+                                                    <span id="selected-users-count" class="badge bg-primary">0</span> users selected
+                                                </div>
+                                            </div>
+                                            <div class="border rounded p-3 mb-3 users-selection-container" style="max-height: 200px; overflow-y: auto;">
+                                                <div id="bulk-reward-users-list" class="d-flex flex-wrap gap-2">
+                                                    <!-- Users will be populated dynamically -->
+                                                    <div class="text-center w-100 py-3">
+                                                        <div class="spinner-border spinner-border-sm text-primary" role="status"></div>
+                                                        <span class="ms-2">Loading users...</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="bulk-reward-title" class="form-label">Reward Title</label>
+                                            <input type="text" id="bulk-reward-title" class="form-control" required placeholder="e.g., Loyalty Bonus, Special Offer">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="bulk-reward-amount" class="form-label">Reward Amount (PKR)</label>
+                                            <input type="number" id="bulk-reward-amount" class="form-control" required min="1" step="1" placeholder="Enter amount in PKR">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="bulk-reward-description" class="form-label">Description</label>
+                                            <textarea id="bulk-reward-description" class="form-control" rows="3" placeholder="Enter details about this reward"></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="bulk-reward-expiry" class="form-label">Expiry Date (Optional)</label>
+                                            <input type="date" id="bulk-reward-expiry" class="form-control">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary w-100">
+                                            <i class="fas fa-paper-plane me-1"></i> Send Rewards to Selected Users
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header bg-info text-white">
+                                    <h5 class="mb-0">Bulk Rewards Information</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="alert alert-info">
+                                        <h6 class="alert-heading"><i class="fas fa-info-circle me-1"></i> About Bulk Rewards</h6>
+                                        <p class="mb-0">Use this feature to send the same reward to multiple users at once. Each user will receive an individual reward notification.</p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <h6>Benefits:</h6>
+                                        <ul>
+                                            <li>Save time by sending rewards in bulk</li>
+                                            <li>Ensure consistent reward amounts across users</li>
+                                            <li>Each user still receives a personalized notification</li>
+                                        </ul>
+                                    </div>
+                                    <div class="alert alert-warning mb-0">
+                                        <i class="fas fa-exclamation-triangle me-1"></i> Make sure to review your selection before sending rewards. This action cannot be undone in bulk, though individual rewards can be deleted later.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mt-4">
+                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">User Rewards List</h5>
+                    <div>
+                        <input type="text" id="rewards-search" class="form-control form-control-sm d-inline-block w-auto" placeholder="Search rewards...">
+                        <button class="btn btn-sm btn-light ms-2" onclick="searchUserRewards()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>User</th>
+                                    <th>Title</th>
+                                    <th>Amount</th>
+                                    <th>Created</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="rewards-list">
+                                <tr>
+                                    <td colspan="7" class="text-center py-4">
+                                        <i class="fas fa-spinner fa-spin me-2"></i> Loading rewards...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            </section>
+            
+            <!-- Reward Requests Section -->
+            <section id="reward-requests" class="section">
+                <h2>Reward Redemption Requests</h2>
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <button class="btn btn-success" onclick="refreshRewardRequests()">
+                            <i class="fas fa-sync-alt"></i> Refresh
+                        </button>
+                    </div>
+                    <div class="d-flex">
+                        <input type="text" id="reward-request-search" class="form-control me-2" placeholder="Search by name or reward...">
+                        <button class="btn btn-outline-primary" onclick="searchRewardRequests()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Reward Redemption Requests</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Request ID</th>
+                                        <th>User</th>
+                                        <th>Reward</th>
+                                        <th>Amount</th>
+                                        <th>WhatsApp</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="reward-requests-list">
+                                    <tr>
+                                        <td colspan="8" class="text-center py-4">
+                                            <div class="spinner-border text-primary" role="status">
+                                                <span class="visually-hidden">Loading...</span>
+                                            </div>
+                                            <p class="mt-2">Loading reward requests...</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="user-notifications" class="section">
+                <h2>User Notifications Management</h2>
+                
+                <div class="row mb-4">
+                    <div class="col-md-5 mb-3">
+                        <div class="card">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0">Send Bulk Notification</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="add-notification-form">
+                                    <div class="mb-3">
+                                        <label for="notification-title" class="form-label">Notification Title</label>
+                                        <input type="text" id="notification-title" class="form-control" placeholder="Enter notification title" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="notification-message" class="form-label">Message</label>
+                                        <textarea id="notification-message" class="form-control" rows="3" placeholder="Enter notification message" required></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="notification-type" class="form-label">Type</label>
+                                        <select id="notification-type" class="form-select">
+                                            <option value="info">Info</option>
+                                            <option value="success">Success</option>
+                                            <option value="warning">Warning</option>
+                                            <option value="danger">Danger</option>
+                                        </select>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <button type="submit" class="btn btn-primary">Send to Selected Users</button>
+                                        <span id="selected-count" class="badge bg-secondary">0 Selected</span>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-7 mb-3">
+                        <div class="card">
+                            <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0">Users</h5>
+                                <div>
+                                    <button id="select-all-btn" class="btn btn-sm btn-light">Select All</button>
+                                    <button id="deselect-all-btn" class="btn btn-sm btn-light ms-2">Deselect All</button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <div class="input-group">
+                                        <input type="text" id="notification-search-user" class="form-control" placeholder="Search by name or email">
+                                        <button class="btn btn-outline-secondary" type="button" id="search-user-btn">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="user-list" class="list-group" style="max-height: 400px; overflow-y: auto;">
+                                    <!-- All users will load here automatically -->
+                                    <div class="text-center p-3">
+                                        <div class="spinner-border text-primary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mb-4">
+                    <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">User Notifications</h5>
+                        <span class="badge bg-light text-dark" id="selected-user-name">No user selected</span>
+                    </div>
+                    <div class="card-body">
+                        <div id="user-notifications-list" class="list-group">
+                            <!-- User notifications will be loaded here -->
+                            <div class="text-center p-5 text-muted">
+                                <i class="fas fa-bell fa-3x mb-3"></i>
+                                <p>Select a user to view their notifications</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Product Modal -->
+        <div class="modal fade" id="productModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add/Edit Product</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="product-form">
+                            <input type="hidden" id="product-id">
+                            <div class="mb-3">
+                                <label class="form-label">Product Name</label>
+                                <input type="text" class="form-control" id="product-name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Description</label>
+                                <textarea class="form-control" id="product-description" required></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Price</label>
+                                <input type="number" class="form-control" id="product-price" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Stock</label>
+                                <input type="number" class="form-control" id="product-stock" required>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Category</label>
+                                <input type="text" class="form-control" id="product-category">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Image URL</label>
+                                <input type="url" class="form-control" id="product-image">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="saveProduct()">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Status Modal -->
+        <div class="modal fade" id="orderModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Update Order Status</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="order-form">
+                            <input type="hidden" id="order-id">
+                            <div class="mb-3">
+                                <label class="form-label">Order Status</label>
+                                <select class="form-control" id="order-status">
+                                    <option value="pending">Pending</option>
+                                    <option value="shipped">Shipped</option>
+                                    <option value="delivered">Delivered</option>
+                                    <option value="cancelled">Cancelled</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="updateOrder()">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/data.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/wallet-admin.js"></script>
+    <script src="js/wallet-admin-functions.js"></script>
+    <script src="js/wallet-requests.js"></script>
+    <script src="js/user-rewards.js"></script>
+    <script src="js/reward-requests-admin.js"></script>
+    <script src="js/user-notifications.js"></script>
+    <!-- Fixed Order View Functions -->
+    <script src="js/order-view-fix.js"></script>
+</body>
+</html>
